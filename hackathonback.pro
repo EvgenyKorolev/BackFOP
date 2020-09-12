@@ -27,6 +27,7 @@ SOURCES += \
     src/httprequesthandlerfactory.cpp \
     src/httpserver.cpp \
     src/main.cpp \
+    src/requestaccess.cpp \
     src/requestbiccode.cpp \
     src/requesterror.cpp \
     src/requestgetcontract.cpp \
@@ -49,6 +50,7 @@ HEADERS += \
     src/dbowner.h \
     src/httprequesthandlerfactory.h \
     src/httpserver.h \
+    src/requestaccess.h \
     src/requestbiccode.h \
     src/requesterror.h \
     src/requestgetcontract.h \
