@@ -4,8 +4,11 @@
 #include <QString>
 #include <QVector>
 #include <QSqlQuery>
+#include <QStringList>
 #include <QSqlRecord>
 #include <QSqlDatabase>
+
+#define Table QVector<QStringList>
 
 class DbOwner
 {
@@ -15,7 +18,8 @@ public:
         static DbOwner _instance;
         return _instance;
     }
-    bool execCommand(QString &sqlCommand);
+    bool execCommand(const QString &sqlCommand);
+    bool execCommand(const QString &sqlCommand, Table &ansverTable);
     bool isValid();
 
 

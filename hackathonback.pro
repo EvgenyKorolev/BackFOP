@@ -29,6 +29,7 @@ SOURCES += \
     src/main.cpp \
     src/requestbiccode.cpp \
     src/requesterror.cpp \
+    src/requestgetcontract.cpp \
     src/requestping.cpp \
     src/requestsetcontract.cpp \
     src/settings.cpp \
@@ -44,11 +45,13 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     src/ConstDefine.h \
+    src/contract.h \
     src/dbowner.h \
     src/httprequesthandlerfactory.h \
     src/httpserver.h \
     src/requestbiccode.h \
     src/requesterror.h \
+    src/requestgetcontract.h \
     src/requestping.h \
     src/requestsetcontract.h \
     src/settings.h \

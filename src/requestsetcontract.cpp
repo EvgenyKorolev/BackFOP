@@ -1,24 +1,11 @@
 #include "requestsetcontract.h"
 #include "settings.h"
 #include "dbowner.h"
+#include "contract.h"
 
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
 #include <QDomDocument>
-
-struct Contract
-{
-    QString inn;
-    QString bic;
-    QString bankName;
-    QString comment;
-    QString startContract;
-    QString activateContract;
-    QString endContract;
-    QString interest;
-    QString moneyCod;
-    QString moneyCount;
-};
 
 RequestSetContract::RequestSetContract() : Poco::Net::HTTPRequestHandler()
 {
@@ -43,6 +30,16 @@ void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     contract.interest = root.attribute("interest");
     contract.moneyCod = root.attribute("moneyCod");
     contract.moneyCount = root.attribute("moneyCount");
+    if (contract.inn == "" || contract.bic == "" || contract.bankName == "" ||
+            contract.startContract == "" || contract.activateContract == "" ||
+            contract.endContract =="" || contract.interest == "" || contract.moneyCod == "" ||
+            contract.moneyCount == "")
+    {
+        responce.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+        QByteArray ret("404 Error format");
+        responce.sendBuffer(ret.data(), ret.size());
+        return;
+    }
     QString query = QString("INSERT INTO %1.contracts (inn, bic, bankName, comment, startContract, "
                             "activateContract, endContract, interest, moneyCod, moneyCount) "
                             "VALUES(E'%2', E'%3', E'%4', E'%5', E'%6', E'%7', E'%8', E'%9', E'%10', "

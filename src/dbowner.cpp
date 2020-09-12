@@ -1,7 +1,7 @@
 #include "dbowner.h"
 #include "settings.h"
 
-bool DbOwner::execCommand(QString &sqlCommand)
+bool DbOwner::execCommand(const QString &sqlCommand)
 {
     if (!m_db.isValid())
     {
@@ -9,6 +9,26 @@ bool DbOwner::execCommand(QString &sqlCommand)
     }
     QSqlQuery query(m_db);
     return query.exec(sqlCommand);
+}
+
+bool DbOwner::execCommand(const QString &sqlCommand, Table &ansverTable)
+{
+    if (!m_db.isValid())
+    {
+        if (!reconnect()) return false;
+    }
+    QSqlQuery query(m_db);
+    bool ret =  query.exec(sqlCommand);
+    while (query.next()) {
+        ansverTable.push_back(QStringList());
+        QSqlRecord record = query.record();
+        int end = record.count();
+        for (int i = 0; i < end; ++i)
+        {
+            ansverTable.back().push_back(record.value(i).toString());
+        }
+    }
+    return ret;
 }
 
 bool DbOwner::isValid()
