@@ -1,0 +1,14 @@
+#ifndef CONSTDEFINE_H
+#define CONSTDEFINE_H
+
+#define INI_FILE_FULL_NAME "set.ini"
+
+#define CREATE_USER_DB "CREATE "
+#define CREATE_ORG_DB ""
+#define CREATE_DATA_RDB ""
+#define CREATE_SESSION_RDB ""
+#define CREATE_SETINGS_RDB ""
+#define CREATE_BANKS_INDEX_DB ""
+#define CREATE_CONTRACT_TYPE_DB ""
+
+#endif // CONSTDEFINE_H
