@@ -1,18 +1,19 @@
 #include "dbowner.h"
 #include "settings.h"
 
-bool DbOwner::execCommand(QSqlQuery &sqlCommand)
+bool DbOwner::execCommand(QString &sqlCommand)
 {
     if (!m_db.isValid())
     {
         if (!reconnect()) return false;
     }
     QSqlQuery query(m_db);
-    return query.exec();
+    return query.exec(sqlCommand);
 }
 
 bool DbOwner::isValid()
 {
+
     return m_db.isValid();
 }
 

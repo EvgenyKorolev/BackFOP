@@ -36,6 +36,9 @@ public:
     int getServerPort();
     void setServerPort(int port);
 
+    QString getCbrNameToBicResurce();
+    void setCbrNameToBicResurce(const QString &cbrNameToBicResurce);
+
 signals:
     void changedSettings();
 
@@ -54,6 +57,7 @@ private:
     QString m_dbUserLogin;
     QString m_dbUserPass;
     quint32 m_dbServerPort;
+    QString m_cbrNameToBicResurce;
 
     int m_serverMaxQueued;
     int m_serverMaxThreads;

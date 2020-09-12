@@ -1,0 +1,71 @@
+#include "requestsetcontract.h"
+#include "settings.h"
+#include "dbowner.h"
+
+#include <Poco/Net/HTTPServerResponse.h>
+#include <Poco/Net/HTTPServerRequest.h>
+#include <QDomDocument>
+
+struct Contract
+{
+    QString inn;
+    QString bic;
+    QString bankName;
+    QString comment;
+    QString startContract;
+    QString activateContract;
+    QString endContract;
+    QString interest;
+    QString moneyCod;
+    QString moneyCount;
+};
+
+RequestSetContract::RequestSetContract() : Poco::Net::HTTPRequestHandler()
+{
+
+}
+
+void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServer, Poco::Net::HTTPServerResponse &responce)
+{
+    std::string name = requestServer.getURI();
+    size_t num = name.find_last_of('/') + 1;
+    name = name.substr(num, name.size() - num);
+    QDomDocument docRequest = QDomDocument(QString(name.c_str()));
+    QDomElement root = docRequest.firstChildElement("contract");
+    Contract contract;
+    contract.inn = root.attribute("inn");
+    contract.bic = root.attribute("bic");
+    contract.bankName = root.attribute("bankName");
+    contract.comment = root.attribute("comment");
+    contract.startContract = root.attribute("startContract");
+    contract.activateContract = root.attribute("activateContract");
+    contract.endContract = root.attribute("endContract");
+    contract.interest = root.attribute("interest");
+    contract.moneyCod = root.attribute("moneyCod");
+    contract.moneyCount = root.attribute("moneyCount");
+    QString query = QString("INSERT INTO %1.contracts (inn, bic, bankName, comment, startContract, "
+                            "activateContract, endContract, interest, moneyCod, moneyCount) "
+                            "VALUES(E'%2', E'%3', E'%4', E'%5', E'%6', E'%7', E'%8', E'%9', E'%10', "
+                            "E'%11');")
+            .arg(Settings::getInstance().getDbName())
+            .arg(contract.inn)
+            .arg(contract.bic)
+            .arg(contract.bankName)
+            .arg(contract.comment)
+            .arg(contract.startContract)
+            .arg(contract.activateContract)
+            .arg(contract.endContract)
+            .arg(contract.interest)
+            .arg(contract.moneyCod)
+            .arg(contract.moneyCount);
+    if (!DbOwner::getInstance().execCommand(query))
+    {
+        responce.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+        QByteArray ret("404 Error");
+        responce.sendBuffer(ret.data(), ret.size());
+        return;
+    }
+    responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+    QByteArray ret("200 OK");
+    responce.sendBuffer(ret.data(), ret.size());
+}

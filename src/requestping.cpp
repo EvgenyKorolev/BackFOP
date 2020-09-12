@@ -1,6 +1,6 @@
 #include "requestping.h"
 
-#include "Poco/Net/HTTPServerResponse.h"
+#include <Poco/Net/HTTPServerResponse.h>
 #include <QByteArray>
 
 RequestPing::RequestPing() : Poco::Net::HTTPRequestHandler()

@@ -1,14 +1,14 @@
-#ifndef REQUESTERROR_H
-#define REQUESTERROR_H
+#ifndef REQUESTBICCODE_H
+#define REQUESTBICCODE_H
 
 #include <Poco/Net/HTTPRequestHandler.h>
 
-class RequestError : public Poco::Net::HTTPRequestHandler
+class RequestBicCode : public Poco::Net::HTTPRequestHandler
 {
 public:
-    RequestError();
+    RequestBicCode();
     void handleRequest(Poco::Net::HTTPServerRequest &requestServer,
                        Poco::Net::HTTPServerResponse &responce);
 };
 
-#endif // REQUESTERROR_H
+#endif // REQUESTBICCODE_H

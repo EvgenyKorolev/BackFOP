@@ -1,5 +1,5 @@
 QT -= gui
-QT += network sql
+QT += network sql xml
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -27,8 +27,10 @@ SOURCES += \
     src/httprequesthandlerfactory.cpp \
     src/httpserver.cpp \
     src/main.cpp \
+    src/requestbiccode.cpp \
     src/requesterror.cpp \
     src/requestping.cpp \
+    src/requestsetcontract.cpp \
     src/settings.cpp \
     src/xmldatahandler.cpp
 
@@ -45,7 +47,9 @@ HEADERS += \
     src/dbowner.h \
     src/httprequesthandlerfactory.h \
     src/httpserver.h \
+    src/requestbiccode.h \
     src/requesterror.h \
     src/requestping.h \
+    src/requestsetcontract.h \
     src/settings.h \
     src/xmldatahandler.h

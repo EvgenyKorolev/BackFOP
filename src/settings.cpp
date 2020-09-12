@@ -90,17 +90,28 @@ void Settings::setServerPort(int port)
     m_serverPort = port;
 }
 
+QString Settings::getCbrNameToBicResurce()
+{
+    return m_cbrNameToBicResurce;
+}
+
+void Settings::setCbrNameToBicResurce(const QString &cbrNameToBicResurce)
+{
+    m_cbrNameToBicResurce = cbrNameToBicResurce;
+}
+
 void Settings::loadSettings()
 {
-    m_dbUserLogin = "postgres";
-    m_dbUserPass = "postgres";
-    m_dbName = "FOT";
-    m_dbServerName = "localhost";
+    m_dbUserLogin = "rosatom";
+    m_dbUserPass = "rosatomfop";
+    m_dbName = "rosatom";
+    m_dbServerName = "rosatom-db.c5w73kvgbckq.eu-central-1.rds.amazonaws.com";
     m_dbServerAddress = QHostAddress::LocalHost;
     m_dbServerPort = 5432;
     m_serverMaxQueued = 100;
     m_serverMaxThreads = 16;
     m_serverPort = 8000;
+    m_cbrNameToBicResurce = "www.cbr.ru/scripts/XML_bic.asp";
 }
 
 Settings::Settings(const QString &iniFileFullName) : m_iniFileFullName(iniFileFullName)

@@ -15,7 +15,7 @@ public:
         static DbOwner _instance;
         return _instance;
     }
-    bool execCommand(QSqlQuery &sqlCommand);
+    bool execCommand(QString &sqlCommand);
     bool isValid();
 
 
