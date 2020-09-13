@@ -109,16 +109,17 @@ void RequestGetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     while (it != ansverTable.end())
     {
         QDomElement answer = docRequest.firstChildElement(QString("contracts%1").arg(number));
+        answer.setAttribute("id", it->at(0));
         answer.setAttribute("inn", it->at(1));
-        answer.setAttribute("bic", it->at(3));
-        answer.setAttribute("bankName", it->at(4));
-        answer.setAttribute("comment", it->at(5));
-        answer.setAttribute("startContract", it->at(6));
-        answer.setAttribute("activateContract", it->at(7));
-        answer.setAttribute("endContract", it->at(6));
-        answer.setAttribute("interest", it->at(7));
-        answer.setAttribute("moneyCod", it->at(8));
-        answer.setAttribute("moneyCount", it->at(9));
+        answer.setAttribute("bic", it->at(2));
+        answer.setAttribute("bankName", it->at(3));
+        answer.setAttribute("comment", it->at(4));
+        answer.setAttribute("startContract", it->at(5));
+        answer.setAttribute("activateContract", it->at(6));
+        answer.setAttribute("endContract", it->at(7));
+        answer.setAttribute("interest", it->at(8));
+        answer.setAttribute("moneyCod", it->at(9));
+        answer.setAttribute("moneyCount", it->at(10));
         rootAnswer.appendChild(answer);
         ++it;
         ++number;

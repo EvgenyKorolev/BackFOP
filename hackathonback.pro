@@ -32,8 +32,10 @@ SOURCES += \
     src/requestbiccode.cpp \
     src/requesterror.cpp \
     src/requestgetcontract.cpp \
+    src/requestgetstatisticlist.cpp \
     src/requestping.cpp \
     src/requestsetcontract.cpp \
+    src/requestupdatecontract.cpp \
     src/settings.cpp \
     src/xmldatahandler.cpp
 
@@ -56,7 +58,9 @@ HEADERS += \
     src/requestbiccode.h \
     src/requesterror.h \
     src/requestgetcontract.h \
+    src/requestgetstatisticlist.h \
     src/requestping.h \
     src/requestsetcontract.h \
+    src/requestupdatecontract.h \
     src/settings.h \
     src/xmldatahandler.h
