@@ -31,7 +31,9 @@ void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     contract.interest = root.attribute("interest");
     contract.moneyCod = root.attribute("moneyCod");
     contract.moneyCount = root.attribute("moneyCount");
-    auto [unit, role] = AccessManager::testSessin(root.attribute("uuid"));
+    auto tmp = AccessManager::testSessin(root.attribute("uuid"));
+    QString unit = tmp.first;
+    QString role = tmp.second;
     QString inn = AccessManager::getInnFromId(unit);
     if (inn != root.attribute("inn"))
     {

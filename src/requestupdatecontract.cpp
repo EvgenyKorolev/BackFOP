@@ -20,7 +20,9 @@ void RequestUpdateContract::handleRequest(Poco::Net::HTTPServerRequest &requestS
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("contract");
-    auto [unit, role] = AccessManager::testSessin(root.attribute("uuid"));
+    auto tmp = AccessManager::testSessin(root.attribute("uuid"));
+    QString unit = tmp.first;
+    QString role = tmp.second;
     QString inn = AccessManager::getInnFromId(unit);
     if (inn != root.attribute("inn"))
     {

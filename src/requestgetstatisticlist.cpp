@@ -29,7 +29,9 @@ void RequestGetStatisticList::handleRequest(Poco::Net::HTTPServerRequest &reques
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("statistic");
-    auto [unit, role] = AccessManager::testSessin(root.attribute("uuid"));
+    auto tmp = AccessManager::testSessin(root.attribute("uuid"));
+    QString unit = tmp.first;
+    QString role = tmp.second;
     QString inn = AccessManager::getInnFromId(unit);
     if (inn != root.attribute("inn"))
     {
@@ -54,15 +56,15 @@ void RequestGetStatisticList::handleRequest(Poco::Net::HTTPServerRequest &reques
     auto it = ansverTable.begin();
     while (it != ansverTable.end())
     {
-        if(!ansverData.contains(QPair(it->at(2), it->at(9))))
+        if(!ansverData.contains(QPair<QString, QString>(it->at(2), it->at(9))))
         {
-            ansverData[QPair(it->at(2), it->at(9))].bankName = it->at(3);
-            ansverData[QPair(it->at(2), it->at(9))].comment = it->at(4);
-            ansverData[QPair(it->at(2), it->at(9))].moneyCount = it->at(10).toInt();
+            ansverData[QPair<QString, QString>(it->at(2), it->at(9))].bankName = it->at(3);
+            ansverData[QPair<QString, QString>(it->at(2), it->at(9))].comment = it->at(4);
+            ansverData[QPair<QString, QString>(it->at(2), it->at(9))].moneyCount = it->at(10).toInt();
         }
         else
         {
-            ansverData[QPair(it->at(2), it->at(9))].moneyCount += it->at(10).toInt();
+            ansverData[QPair<QString, QString>(it->at(2), it->at(9))].moneyCount += it->at(10).toInt();
         }
         ++it;
     }
