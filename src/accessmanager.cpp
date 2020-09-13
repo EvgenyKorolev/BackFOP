@@ -32,7 +32,7 @@ std::pair<QString, QString> AccessManager::testSessin(QString uuid)
 
 QString AccessManager::getInnFromId(QString id)
 {
-    QString queryInn = QString("SELECT ALL FROM %1.units WHERE ID = E'%2';")
+    QString queryInn = QString("SELECT ALL FROM %1.company WHERE ID = E'%2';")
             .arg(Settings::getInstance().getDbName())
             .arg(id);
     Table idTable;
