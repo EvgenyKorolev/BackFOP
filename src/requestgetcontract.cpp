@@ -1,4 +1,5 @@
 #include "requestgetcontract.h"
+#include "accessmanager.h"
 #include "settings.h"
 #include "dbowner.h"
 #include "contract.h"
@@ -19,6 +20,15 @@ void RequestGetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("contract");
+    auto [unit, role] = AccessManager::testSessin(root.attribute("uuid"));
+    QString inn = AccessManager::getInnFromId(unit);
+    if (inn != root.attribute("inn"))
+    {
+        responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+        QByteArray ret("404 forbidden");
+        responce.sendBuffer(ret.data(), ret.size());
+        return;
+    }
     QString whereReq;
     bool needEnd{false};
     if (root.attribute("inn") != "")
@@ -99,12 +109,12 @@ void RequestGetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     while (it != ansverTable.end())
     {
         QDomElement answer = docRequest.firstChildElement(QString("contracts%1").arg(number));
-        answer.setAttribute("inn", it->at(0));
-        answer.setAttribute("bic", it->at(1));
-        answer.setAttribute("bankName", it->at(2));
-        answer.setAttribute("comment", it->at(3));
-        answer.setAttribute("startContract", it->at(4));
-        answer.setAttribute("activateContract", it->at(5));
+        answer.setAttribute("inn", it->at(1));
+        answer.setAttribute("bic", it->at(3));
+        answer.setAttribute("bankName", it->at(4));
+        answer.setAttribute("comment", it->at(5));
+        answer.setAttribute("startContract", it->at(6));
+        answer.setAttribute("activateContract", it->at(7));
         answer.setAttribute("endContract", it->at(6));
         answer.setAttribute("interest", it->at(7));
         answer.setAttribute("moneyCod", it->at(8));

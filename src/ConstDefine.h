@@ -4,9 +4,11 @@
 #define INI_FILE_FULL_NAME "set.ini"
 
 #define CREATE_USER_DB "CREATE "
-#define CREATE_ORG_DB ""
-#define CREATE_DATA_RDB ""
-#define CREATE_SESSION_RDB ""
+#define CREATE_COMPANY_DB "CREATE "
+#define CREATE_OSTAT_RDB "CREATE "
+#define CREATE_CONTRACT "CREATE "
+
+
 #define CREATE_SETINGS_RDB ""
 #define CREATE_BANKS_INDEX_DB ""
 #define CREATE_CONTRACT_TYPE_DB ""

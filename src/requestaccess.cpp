@@ -5,7 +5,10 @@
 
 #include <Poco/Net/HTTPServerResponse.h>
 #include <Poco/Net/HTTPServerRequest.h>
+#include <Poco/Net/HTTPCookie.h>
 #include <QDomDocument>
+#include <QDateTime>
+#include <QUuid>
 
 RequestAccess::RequestAccess() : Poco::Net::HTTPRequestHandler()
 {
@@ -38,17 +41,28 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
         responce.sendBuffer(ret.data(), ret.size());
         return;
     }
+    QUuid uid(QString::number(QDateTime::currentMSecsSinceEpoch()));
+    QString uuid = uid.toString();
+    QString querySave = QString("INSERT INTO %1.sessions (userid, uuid, time) "
+                            "VALUES(E'%2', E'%3', E'%4');")
+            .arg(Settings::getInstance().getDbName())
+            .arg(ansverTable.at(0).at(0))
+            .arg(uuid)
+            .arg(QString::number(QDateTime::currentMSecsSinceEpoch()));
     QDomDocument docAnswer = QDomDocument();
     QDomElement rootAnswer = docRequest.firstChildElement("user");
     docAnswer.appendChild(rootAnswer);
-        rootAnswer.setAttribute("login", ansverTable.at(0).at(0));
-        rootAnswer.setAttribute("name", ansverTable.at(0).at(1));
-        rootAnswer.setAttribute("surname", ansverTable.at(0).at(2));
-        rootAnswer.setAttribute("fathername", ansverTable.at(0).at(3));
-        rootAnswer.setAttribute("position", ansverTable.at(0).at(4));
-        rootAnswer.setAttribute("unitname", ansverTable.at(0).at(5));
-        rootAnswer.setAttribute("role", ansverTable.at(0).at(6));
+        rootAnswer.setAttribute("login", ansverTable.at(0).at(1));
+        rootAnswer.setAttribute("name", ansverTable.at(0).at(2));
+        rootAnswer.setAttribute("surname", ansverTable.at(0).at(3));
+        rootAnswer.setAttribute("fathername", ansverTable.at(0).at(4));
+        rootAnswer.setAttribute("position", ansverTable.at(0).at(6));
+        rootAnswer.setAttribute("unitname", ansverTable.at(0).at(7));
+        rootAnswer.setAttribute("role", ansverTable.at(0).at(8));
+        rootAnswer.setAttribute("session", uuid);
     responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+    Poco::Net::HTTPCookie cookie("session", uuid.toStdString());
+    responce.addCookie(cookie);
     QByteArray ret = docAnswer.toString().toUtf8();
     responce.sendBuffer(ret.data(), ret.size());
 }

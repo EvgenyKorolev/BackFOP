@@ -1,5 +1,5 @@
 QT -= gui
-QT += network sql xml
+QT += sql xml network
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -23,6 +23,7 @@ LIBS += \
     /usr/lib64/libPocoFoundation.so
 
 SOURCES += \
+    src/accessmanager.cpp \
     src/dbowner.cpp \
     src/httprequesthandlerfactory.cpp \
     src/httpserver.cpp \
@@ -46,6 +47,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     src/ConstDefine.h \
+    src/accessmanager.h \
     src/contract.h \
     src/dbowner.h \
     src/httprequesthandlerfactory.h \

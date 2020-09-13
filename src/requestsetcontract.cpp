@@ -1,4 +1,5 @@
 #include "requestsetcontract.h"
+#include "accessmanager.h"
 #include "settings.h"
 #include "dbowner.h"
 #include "contract.h"
@@ -30,6 +31,23 @@ void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     contract.interest = root.attribute("interest");
     contract.moneyCod = root.attribute("moneyCod");
     contract.moneyCount = root.attribute("moneyCount");
+
+
+//    auto [unit, role] = AccessManager::testSessin(root.attribute("uuid"));
+//    QString inn = AccessManager::getInnFromId(unit);
+//    if (inn != root.attribute("inn"))
+//    {
+//        responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+//        QByteArray ret("404 forbidden");
+//        responce.sendBuffer(ret.data(), ret.size());
+//        return;
+//    }
+
+
+
+
+
+
     if (contract.inn == "" || contract.bic == "" || contract.bankName == "" ||
             contract.startContract == "" || contract.activateContract == "" ||
             contract.endContract =="" || contract.interest == "" || contract.moneyCod == "" ||
