@@ -22,7 +22,7 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("userAccess");
-    QString query = QString("SELECT ALL FROM %users WHERE login = E'%2' AND passw = E'%3';")
+    QString query = QString("SELECT ALL FROM users WHERE login = E'%2' AND passw = E'%3';")
             .arg(Settings::getInstance().getDbName())
             .arg(root.attribute("login"))
             .arg(root.attribute("pass"));
@@ -30,6 +30,8 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     if (!DbOwner::getInstance().execCommand(query, ansverTable))
     {
         responce.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+        responce.set("Acces-Control-Allow-Origin", "*");
+        responce.set("Content-type:", "text/html");
         QByteArray ret("404 forbidden");
         responce.sendBuffer(ret.data(), ret.size());
         return;
@@ -37,6 +39,8 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     if (ansverTable.size() != 1)
     {
         responce.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+        responce.set("Acces-Control-Allow-Origin", "*");
+        responce.set("Content-type:", "text/html");
         QByteArray ret("404 forbidden");
         responce.sendBuffer(ret.data(), ret.size());
         return;
@@ -61,6 +65,8 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
         rootAnswer.setAttribute("role", ansverTable.at(0).at(8));
         rootAnswer.setAttribute("session", uuid);
     responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+    responce.set("Acces-Control-Allow-Origin", "*");
+    responce.set("Content-type:", "text/html");
     Poco::Net::HTTPCookie cookie("session", uuid.toStdString());
     responce.addCookie(cookie);
     QByteArray ret = docAnswer.toString().toUtf8();

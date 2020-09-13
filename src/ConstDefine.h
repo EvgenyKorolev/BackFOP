@@ -1,6 +1,8 @@
 #ifndef CONSTDEFINE_H
 #define CONSTDEFINE_H
 
+#include <QMap>
+
 #define INI_FILE_FULL_NAME "set.ini"
 
 #define CREATE_CONTRACT_DB "CREATE TABLE contracts (id SERIAL, inn TEXT, bic TEXT, bankName TEXT, comment TEXT, startContract TEXT, activateContract TEXT, endContract TEXT, interest TEXT, moneyCod TEXT, moneyCount TEXT);"
@@ -9,6 +11,12 @@
 #define CREATE_USER_DB "CREATE TABLE users (id SERIAL, login TEXT, surname TEXT, name TEXT, fathername TEXT, pass TEXT, position TEXT, unitname TEXT, role TEXT);"
 #define CREATE_SESSION_DB "CREATE TABLE sessions (userid TEXT, uuid TEXT, time TEXT);"
 
+static std::string simbolTable(const std::string &arg)
+{
+    QMap<std::string, std::string> simbols;
+
+    return simbols[arg];
+}
 
 
 #define CREATE_BANKS_INDEX_DB ""

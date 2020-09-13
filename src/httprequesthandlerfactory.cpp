@@ -32,6 +32,8 @@ Poco::Net::HTTPRequestHandler *HttpRequestHandlerFactory::createRequestHandler(c
         return new RequestGetStatisticList();
     else if (!request.getURI().find("/api/getSesion/"))
         return new RequestAccess();
+    else if (!request.getURI().find("/api/login/"))
+        return new RequestAccess();
 
 
 //    else if (!request.getURI().find("/api/delContract/"))

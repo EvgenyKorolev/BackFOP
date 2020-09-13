@@ -27,6 +27,8 @@ void RequestGetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     if (inn != root.attribute("inn"))
     {
         responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+        responce.set("Acces-Control-Allow-Origin", "*");
+        responce.set("Content-type:", "text/html");
         QByteArray ret("404 forbidden");
         responce.sendBuffer(ret.data(), ret.size());
         return;
@@ -99,6 +101,8 @@ void RequestGetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     if (!DbOwner::getInstance().execCommand(query, ansverTable))
     {
         responce.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+        responce.set("Acces-Control-Allow-Origin", "*");
+        responce.set("Content-type:", "text/html");
         QByteArray ret("404 Error");
         responce.sendBuffer(ret.data(), ret.size());
         return;
@@ -127,6 +131,8 @@ void RequestGetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
         ++number;
     }
     responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+    responce.set("Acces-Control-Allow-Origin", "*");
+    responce.set("Content-type:", "text/html");
     QByteArray ret = docAnswer.toString().toUtf8();
     responce.sendBuffer(ret.data(), ret.size());
 }

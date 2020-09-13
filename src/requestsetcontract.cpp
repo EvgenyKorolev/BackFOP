@@ -37,7 +37,9 @@ void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     QString inn = AccessManager::getInnFromId(unit);
     if (inn != root.attribute("inn"))
     {
-        responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+        responce.setStatus(Poco::Net::HTTPResponse::HTTP_FORBIDDEN );
+        responce.set("Acces-Control-Allow-Origin", "*");
+        responce.set("Content-type:", "text/html");
         QByteArray ret("404 forbidden");
         responce.sendBuffer(ret.data(), ret.size());
         return;
@@ -48,6 +50,8 @@ void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
             contract.moneyCount == "")
     {
         responce.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+        responce.set("Acces-Control-Allow-Origin", "*");
+        responce.set("Content-type:", "text/html");
         QByteArray ret("404 Error format");
         responce.sendBuffer(ret.data(), ret.size());
         return;
@@ -70,11 +74,15 @@ void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
     if (!DbOwner::getInstance().execCommand(query))
     {
         responce.setStatus(Poco::Net::HTTPResponse::HTTP_NOT_FOUND);
+        responce.set("Acces-Control-Allow-Origin", "*");
+        responce.set("Content-type:", "text/html");
         QByteArray ret("404 Error");
         responce.sendBuffer(ret.data(), ret.size());
         return;
     }
     responce.setStatus(Poco::Net::HTTPResponse::HTTP_FOUND);
+    responce.set("Acces-Control-Allow-Origin", "*");
+    responce.set("Content-type:", "text/html");
     QByteArray ret("200 OK");
     responce.sendBuffer(ret.data(), ret.size());
 }
