@@ -9,8 +9,7 @@ AccessManager::AccessManager()
 
 std::pair<QString, QString> AccessManager::testSessin(QString uuid)
 {
-    QString queryUid = QString("SELECT ALL FROM %1.sessions WHERE uuid = E'%2';")
-            .arg(Settings::getInstance().getDbName())
+    QString queryUid = QString("SELECT ALL FROM sessions WHERE uuid = E'%1';")
             .arg(uuid);
     Table uuidTable;
     if (!DbOwner::getInstance().execCommand(queryUid, uuidTable))
@@ -18,8 +17,7 @@ std::pair<QString, QString> AccessManager::testSessin(QString uuid)
         return std::make_pair("", "");
     }
     if (uuidTable.size() != 1) return std::make_pair("", "");
-    QString queryUser = QString("SELECT ALL FROM %1.users WHERE userid = E'%2';")
-            .arg(Settings::getInstance().getDbName())
+    QString queryUser = QString("SELECT ALL FROM users WHERE userid = E'%1';")
             .arg(uuidTable.at(0).at(0));
     Table ansverTable;
     if (!DbOwner::getInstance().execCommand(queryUser, ansverTable))
@@ -32,8 +30,7 @@ std::pair<QString, QString> AccessManager::testSessin(QString uuid)
 
 QString AccessManager::getInnFromId(QString id)
 {
-    QString queryInn = QString("SELECT ALL FROM %1.company WHERE ID = E'%2';")
-            .arg(Settings::getInstance().getDbName())
+    QString queryInn = QString("SELECT ALL FROM company WHERE ID = E'%1';")
             .arg(id);
     Table idTable;
     if (!DbOwner::getInstance().execCommand(queryInn, idTable))

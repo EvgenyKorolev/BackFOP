@@ -19,11 +19,11 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
 {
     std::string name = requestServer.getURI();
     size_t num = name.find_last_of('/') + 1;
+    prepareString(name);
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("userAccess");
-    QString query = QString("SELECT ALL FROM users WHERE login = E'%2' AND passw = E'%3';")
-            .arg(Settings::getInstance().getDbName())
+    QString query = QString("SELECT ALL FROM users WHERE login = E'%1' AND passw = E'%2';")
             .arg(root.attribute("login"))
             .arg(root.attribute("pass"));
     Table ansverTable;
@@ -48,8 +48,7 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     QUuid uid(QString::number(QDateTime::currentMSecsSinceEpoch()));
     QString uuid = uid.toString();
     QString querySave = QString("INSERT INTO sessions (userid, uuid, time) "
-                            "VALUES(E'%2', E'%3', E'%4');")
-            .arg(Settings::getInstance().getDbName())
+                            "VALUES(E'%1', E'%2', E'%3');")
             .arg(ansverTable.at(0).at(0))
             .arg(uuid)
             .arg(QString::number(QDateTime::currentMSecsSinceEpoch()));

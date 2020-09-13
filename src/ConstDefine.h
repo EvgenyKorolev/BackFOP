@@ -2,6 +2,7 @@
 #define CONSTDEFINE_H
 
 #include <QMap>
+#include <algorithm>
 
 #define INI_FILE_FULL_NAME "set.ini"
 
@@ -14,8 +15,20 @@
 static std::string simbolTable(const std::string &arg)
 {
     QMap<std::string, std::string> simbols;
-
+    simbols["%3C"] = "<";
+    simbols["%20"] = " ";
+    simbols["%3E"] = ">";
     return simbols[arg];
+}
+
+static void prepareString(std::string &arg)
+{
+    size_t pos = arg.find('%');
+    while (pos != std::string::npos)
+    {
+        arg.replace(pos, 3, simbolTable(arg.substr(pos, 3)));
+        pos = arg.find('%');
+    }
 }
 
 

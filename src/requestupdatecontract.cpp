@@ -74,8 +74,7 @@ void RequestUpdateContract::handleRequest(Poco::Net::HTTPServerRequest &requestS
     {
         updateReq += QString("moneyCount = E'%1' ").arg(root.attribute("moneyCount"));
     }
-    QString query = QString("UPDATE contracts SET %2 WHERE inn = E'%3');")
-            .arg(Settings::getInstance().getDbName())
+    QString query = QString("UPDATE contracts SET %1 WHERE inn = E'%2');")
             .arg(updateReq)
             .arg(root.attribute("id"));
     if (!DbOwner::getInstance().execCommand(query))
