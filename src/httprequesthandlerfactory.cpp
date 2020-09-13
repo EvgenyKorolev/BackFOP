@@ -5,6 +5,7 @@
 #include "requesterror.h"
 #include "requestping.h"
 #include "requestbiccode.h"
+#include "requestaccess.h"
 #include "requestsetcontract.h"
 #include "requestgetcontract.h"
 #include "requestupdatecontract.h"
@@ -29,6 +30,8 @@ Poco::Net::HTTPRequestHandler *HttpRequestHandlerFactory::createRequestHandler(c
         return new RequestUpdateContract();
     else if (!request.getURI().find("/api/getStatistics/"))
         return new RequestGetStatisticList();
+    else if (!request.getURI().find("/api/getSesion/"))
+        return new RequestAccess();
 
 
 //    else if (!request.getURI().find("/api/delContract/"))

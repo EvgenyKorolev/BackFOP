@@ -28,7 +28,7 @@ void RequestGetStatisticList::handleRequest(Poco::Net::HTTPServerRequest &reques
     size_t num = name.find_last_of('/') + 1;
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
-    QDomElement root = docRequest.firstChildElement("contract");
+    QDomElement root = docRequest.firstChildElement("statistic");
     auto [unit, role] = AccessManager::testSessin(root.attribute("uuid"));
     QString inn = AccessManager::getInnFromId(unit);
     if (inn != root.attribute("inn"))
