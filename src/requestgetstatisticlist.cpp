@@ -41,7 +41,7 @@ void RequestGetStatisticList::handleRequest(Poco::Net::HTTPServerRequest &reques
         return;
     }
 
-    QString query = QString("SELECT ALL FROM %1.contracts WHERE inn = E'%2';")
+    QString query = QString("SELECT ALL FROM contracts WHERE inn = E'%2';")
             .arg(Settings::getInstance().getDbName())
             .arg(root.attribute("inn"));
     Table ansverTable;

@@ -52,7 +52,7 @@ void RequestSetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
         responce.sendBuffer(ret.data(), ret.size());
         return;
     }
-    QString query = QString("INSERT INTO %1.contracts (inn, bic, bankName, comment, startContract, "
+    QString query = QString("INSERT INTO contracts (inn, bic, bankName, comment, startContract, "
                             "activateContract, endContract, interest, moneyCod, moneyCount) "
                             "VALUES(E'%2', E'%3', E'%4', E'%5', E'%6', E'%7', E'%8', E'%9', E'%10', "
                             "E'%11');")

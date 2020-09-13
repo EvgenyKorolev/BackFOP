@@ -92,7 +92,7 @@ void RequestGetContract::handleRequest(Poco::Net::HTTPServerRequest &requestServ
         whereReq += QString("moneyCount = E'%1'").arg(root.attribute("moneyCount"));
         needEnd = true;
     }
-    QString query = QString("SELECT ALL FROM %1.contracts WHERE %2;")
+    QString query = QString("SELECT ALL FROM contracts WHERE %2;")
             .arg(Settings::getInstance().getDbName())
             .arg(whereReq);
     Table ansverTable;

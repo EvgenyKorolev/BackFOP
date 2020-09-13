@@ -22,7 +22,7 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("userAccess");
-    QString query = QString("SELECT ALL FROM %1.dbusers WHERE login = E'%2' AND passw = E'%3';")
+    QString query = QString("SELECT ALL FROM %users WHERE login = E'%2' AND passw = E'%3';")
             .arg(Settings::getInstance().getDbName())
             .arg(root.attribute("login"))
             .arg(root.attribute("pass"));
@@ -43,7 +43,7 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     }
     QUuid uid(QString::number(QDateTime::currentMSecsSinceEpoch()));
     QString uuid = uid.toString();
-    QString querySave = QString("INSERT INTO %1.sessions (userid, uuid, time) "
+    QString querySave = QString("INSERT INTO sessions (userid, uuid, time) "
                             "VALUES(E'%2', E'%3', E'%4');")
             .arg(Settings::getInstance().getDbName())
             .arg(ansverTable.at(0).at(0))
