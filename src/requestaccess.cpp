@@ -22,7 +22,7 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     name = name.substr(num, name.size() - num);
     QDomDocument docRequest = QDomDocument(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("userAccess");
-    QString query = QString("SELECT ALL FROM %1.contracts WHERE login = E'%2' AND passw = E'%3';")
+    QString query = QString("SELECT ALL FROM %1.dbusers WHERE login = E'%2' AND passw = E'%3';")
             .arg(Settings::getInstance().getDbName())
             .arg(root.attribute("login"))
             .arg(root.attribute("pass"));
@@ -53,8 +53,8 @@ void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, P
     QDomElement rootAnswer = docRequest.firstChildElement("user");
     docAnswer.appendChild(rootAnswer);
         rootAnswer.setAttribute("login", ansverTable.at(0).at(1));
-        rootAnswer.setAttribute("name", ansverTable.at(0).at(2));
-        rootAnswer.setAttribute("surname", ansverTable.at(0).at(3));
+        rootAnswer.setAttribute("surname", ansverTable.at(0).at(2));
+        rootAnswer.setAttribute("name", ansverTable.at(0).at(3));
         rootAnswer.setAttribute("fathername", ansverTable.at(0).at(4));
         rootAnswer.setAttribute("position", ansverTable.at(0).at(6));
         rootAnswer.setAttribute("unitname", ansverTable.at(0).at(7));

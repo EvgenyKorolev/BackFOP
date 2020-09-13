@@ -66,7 +66,6 @@ void RequestGetStatisticList::handleRequest(Poco::Net::HTTPServerRequest &reques
         }
         ++it;
     }
-
     QDomDocument docAnswer = QDomDocument();
     QDomElement rootAnswer = docRequest.firstChildElement("ost");
     docAnswer.appendChild(rootAnswer);
