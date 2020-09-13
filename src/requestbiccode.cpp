@@ -19,7 +19,8 @@ RequestBicCode::RequestBicCode() : Poco::Net::HTTPRequestHandler()
 void RequestBicCode::handleRequest(Poco::Net::HTTPServerRequest &requestServer, Poco::Net::HTTPServerResponse &responce)
 {
     std::string name = requestServer.getURI();
-    size_t num = name.find_last_of('/') + 1;
+    size_t num = name.find_last_of('/');
+    num = name.find_last_of('/', num - 1) + 1;
     name = name.substr(num, name.size() - num);
     try
     {

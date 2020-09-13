@@ -18,12 +18,18 @@ RequestAccess::RequestAccess() : Poco::Net::HTTPRequestHandler()
 void RequestAccess::handleRequest(Poco::Net::HTTPServerRequest &requestServer, Poco::Net::HTTPServerResponse &responce)
 {
     std::string name = requestServer.getURI();
-    size_t num = name.find_last_of('/') + 1;
+    size_t num = name.find_last_of('/');
+    num = name.find_last_of('/', num - 1) + 1;
     prepareString(name);
     name = name.substr(num, name.size() - num);
-    QDomDocument docRequest = QDomDocument(QString(name.c_str()));
+    QDomDocument docRequest;
+    bool namespaceProcessing = true;
+    QString errorMsg;
+    int errorLine;
+    int errorColumn;
+    docRequest.setContent(QString(name.c_str()), namespaceProcessing, &errorMsg, &errorLine, &errorColumn);
     QDomElement root = docRequest.firstChildElement("userAccess");
-    QString query = QString("SELECT ALL FROM users WHERE login = E'%1' AND passw = E'%2';")
+    QString query = QString("SELECT * FROM users WHERE login = E'%1' AND pass = E'%2';")
             .arg(root.attribute("login"))
             .arg(root.attribute("pass"));
     Table ansverTable;

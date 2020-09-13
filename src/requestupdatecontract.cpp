@@ -16,9 +16,11 @@ RequestUpdateContract::RequestUpdateContract()
 void RequestUpdateContract::handleRequest(Poco::Net::HTTPServerRequest &requestServer, Poco::Net::HTTPServerResponse &responce)
 {
     std::string name = requestServer.getURI();
-    size_t num = name.find_last_of('/') + 1;
+    size_t num = name.find_last_of('/');
+    num = name.find_last_of('/', num - 1) + 1;
     name = name.substr(num, name.size() - num);
-    QDomDocument docRequest = QDomDocument(QString(name.c_str()));
+    QDomDocument docRequest;
+    docRequest.setContent(QString(name.c_str()));
     QDomElement root = docRequest.firstChildElement("contract");
     auto tmp = AccessManager::testSessin(root.attribute("uuid"));
     QString unit = tmp.first;
