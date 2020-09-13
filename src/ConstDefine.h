@@ -18,6 +18,7 @@ static std::string simbolTable(const std::string &arg)
     simbols["%3C"] = "<";
     simbols["%20"] = " ";
     simbols["%3E"] = ">";
+    simbols["%22"] = "\"";
     return simbols[arg];
 }
 
